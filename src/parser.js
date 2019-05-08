@@ -77,6 +77,28 @@ function resolveAstReferences(node, referenceMap) {
   return node;
 }
 
+function generateExtraExpressionMetadata(node) {
+  const nestableExpressionTypes = [
+    apexNames.BOOLEAN_EXPRESSION,
+    apexNames.BINARY_EXPRESSION,
+  ];
+  Object.keys(node).forEach(key => {
+    if (typeof node[key] === "object") {
+      if (
+        nestableExpressionTypes.indexOf(node["@class"]) !== -1 &&
+        key === "left" &&
+        node.left &&
+        node.left["@class"] &&
+        node["@class"] === node.left["@class"]
+      ) {
+        node.left.disableGroup = true;
+      }
+      node[key] = generateExtraExpressionMetadata(node[key]);
+    }
+  });
+  return node;
+}
+
 /**
  * Sometimes jorje lies about a node location, so we will fix it here before
  * using that information. We do it by enforcing that a parent node start
@@ -361,6 +383,7 @@ function parse(sourceCode, _, options) {
       throw new Error(errors.join("\r\n"));
     }
     ast = resolveAstReferences(ast, {});
+    ast = generateExtraExpressionMetadata(ast);
     fixNodeLocation(ast);
     ast = resolveLineIndexes(ast, lineIndexes);
     generateExtraMetadata(

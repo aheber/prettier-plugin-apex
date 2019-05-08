@@ -37,6 +37,20 @@ class Conditional extends Object {
     a = i ^ j;
     a = i & j;
     a = i | j;
+
+    // Variable declaration
+    String myString = 'a long string ' +
+      'from concatenating ' +
+      'many other strings ' +
+      'together.';
+
+    // Assignment Statement
+    myString = 'a long string ' +
+      'from concatenating ' +
+      'many other strings ' +
+      'together.';
+
+    myVeryLongIntegerVariable = aVeryLongInteger + anotherVeryLongInteger * yetAnotherLongInterger - finallyThisVariable;
   }
 
   void castExpression() {
@@ -67,6 +81,14 @@ class Conditional extends Object {
     c = a >= b;
     c = a && b;
     c = a || b;
+
+    Boolean myVeryLongBooleanVariable = anExtremelyVeryLongVariable >
+      anotherVeryLongVariable >
+      yetAnotherVeryLongVariable;
+
+    myVeryLongBooleanVariable = anExtremelyVeryLongVariable > anotherVeryLongVariable && yetAnotherVeryLongVariable;
+
+    myVeryLongBooleanVariable = anExtremelyVeryLongVariable > anotherVeryLongVariable == anExtremelyVeryLongVariable < anotherVeryLongVariable;
   }
 
   void triggerVariableExpr_inOtherSuite() {}
